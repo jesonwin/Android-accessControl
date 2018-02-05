@@ -1,11 +1,18 @@
 package com.fedming.bottomnavigationdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 /**
  * Created by bruce on 2016/11/1.
@@ -17,12 +24,12 @@ public class HomeActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
+    private FragmentManager mFM=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         //默认 >3 的选中效果会影响ViewPager的滑动切换时的效果，故利用反射去掉
@@ -84,11 +91,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        adapter.addFragment(BaseFragment.newInstance("新闻"));
-        adapter.addFragment(BaseFragment.newInstance("图书"));
-        adapter.addFragment(BaseFragment.newInstance("发现"));
-        adapter.addFragment(BaseFragment.newInstance("更多"));
+        adapter.addFragment(new IndexFragment());
+        adapter.addFragment(new LiveFragment());
+        adapter.addFragment(new MsgFragment());
+        adapter.addFragment(new MyFragment());
         viewPager.setAdapter(adapter);
     }
 }
